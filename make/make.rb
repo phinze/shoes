@@ -25,6 +25,7 @@ module Make
   end
 
   def cc(t)
+    puts "current working dir [#{Dir.pwd}]"
     sh "#{CC} -I. -c -o#{t.name} #{LINUX_CFLAGS} #{t.source}"
   end
 
