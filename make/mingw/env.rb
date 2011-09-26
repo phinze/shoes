@@ -18,10 +18,10 @@ ADD_DLL = ["shoes/appwin32.o"]
 
 # Linux build environment
 #CAIRO_CFLAGS = '-I/mingw/include/glib-2.0 -I/mingw/lib/glib-2.0/include -I/mingw/include/cairo'
-CAIRO_CFLAGS = '-I../glib/lib/glib-2.0/lib/glib-2.0/include -I../cairo/include/cairo'
+CAIRO_CFLAGS = '-Ic:/Users/cremes/rubyinstaller/sandbox/glib/lib/glib-2.0/lib/glib-2.0/include -Ic:/Users/cremes/rubyinstaller/sandbox/cairo/include/cairo'
 CAIRO_LIB = '-lcairo'
 #PANGO_CFLAGS = '-I/mingw/include/pango-1.0'
-PANGO_CFLAGS = '-I../pango/include/pango-1.0/pango'
+PANGO_CFLAGS = '-Ic:/Users/cremes/rubyinstaller/sandbox/pango/include/pango-1.0/pango'
 PANGO_LIB = '-lpangocairo-1.0 -lpango-1.0 -lpangoft2-1.0 -lpangowin32-1.0'
 LINUX_CFLAGS = %[-Wall -I#{ENV['SHOES_DEPS_PATH'] || "/usr"}/include #{CAIRO_CFLAGS} #{PANGO_CFLAGS} -I#{Config::CONFIG['archdir']}]
 if Config::CONFIG['rubyhdrdir']
@@ -42,7 +42,7 @@ LINUX_CFLAGS << " -DRUBY_1_9"
 DLEXT = 'dll'
 #LINUX_CFLAGS << ' -I. -I/mingw/include'
 #LINUX_CFLAGS << ' -I/mingw/include/ruby-1.9.1/ruby'
-LINUX_CFLAGS << ' -I../ruby19_mingw/include/ruby-1.9.1/ruby'
+LINUX_CFLAGS << ' -Ic:/Users/cremes/rubyinstaller/sandbox/ruby19_mingw/include/ruby-1.9.1/ruby'
 LINUX_CFLAGS << " -DXMD_H -DHAVE_BOOLEAN -DSHOES_WIN32 -D_WIN32_IE=0x0500 -D_WIN32_WINNT=0x0500 -DWINVER=0x0500 -DCOBJMACROS"
 LINUX_LDFLAGS = " -DBUILD_DLL -lungif -ljpeg -lglib-2.0 -lgobject-2.0 -lgio-2.0 -lgmodule-2.0 -lgthread-2.0 -fPIC -shared"
 LINUX_LDFLAGS << ' -lshell32 -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lole32 -loleaut32 -ladvapi32 -loleacc -lwinhttp'
