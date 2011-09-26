@@ -164,6 +164,7 @@ task "dist/#{NAME}" => ["dist/lib#{SONAME}.#{DLEXT}", "bin/main.o"] + ADD_DLL + 
 task "dist/lib#{SONAME}.#{DLEXT}" => ['shoes/version.h', 'dist'] + OBJ + ["#{NAMESPACE}:make_so"]
 
 def cc(t)
+  sh %{echo `pwd`}
   sh "#{CC} -I. -c -o#{t.name} #{LINUX_CFLAGS} #{t.source}"
 end
 
