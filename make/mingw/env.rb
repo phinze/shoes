@@ -21,7 +21,7 @@ ADD_DLL = ["shoes/appwin32.o"]
 CAIRO_CFLAGS = '-Ic:/Users/cremes/rubyinstaller/sandbox/glib/include/glib-2.0 -Ic:/Users/cremes/rubyinstaller/sandbox/glib/lib/glib-2.0/include -Ic:/Users/cremes/rubyinstaller/sandbox/cairo/include/cairo'
 CAIRO_LIB = '-lcairo'
 #PANGO_CFLAGS = '-I/mingw/include/pango-1.0'
-PANGO_CFLAGS = '-Ic:/Users/cremes/rubyinstaller/sandbox/pango/include/pango-1.0/pango'
+PANGO_CFLAGS = '-Ic:/Users/cremes/rubyinstaller/sandbox/pango/include/pango-1.0'
 PANGO_LIB = '-lpangocairo-1.0 -lpango-1.0 -lpangoft2-1.0 -lpangowin32-1.0'
 LINUX_CFLAGS = %[-Wall -I#{ENV['SHOES_DEPS_PATH'] || "/usr"}/include #{CAIRO_CFLAGS} #{PANGO_CFLAGS} -I#{Config::CONFIG['archdir']}]
 if Config::CONFIG['rubyhdrdir']
