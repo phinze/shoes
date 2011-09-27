@@ -23,7 +23,8 @@ class MakeMinGW
       Dir.chdir(xdir) do
         puts "#copy_ext, current working dir [#{Dir.pwd}]"
         #login_sh 'ruby -e "p Dir.pwd"; ruby extconf.rb; make'
-        login_sh 'ruby extconf.rb; make'
+        login_sh 'ruby extconf.rb'
+        login_sh 'make'
       end
       copy_files "#{xdir}/*.so", libdir
     end
