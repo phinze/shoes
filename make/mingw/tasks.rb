@@ -41,7 +41,7 @@ class MakeMinGW
     def make_app(name)
       bin = name
       rm_f bin
-      sh "#{CC} -Ldist -o #{bin} bin/main.o shoes/appwin32.o #{LINUX_LIBS} -lshoes #{Config::CONFIG['LDFLAGS']} -mwindows"
+      sh "#{CC} -Ldist -o #{bin} bin/main.o shoes/appwin32.o #{LINUX_LDFLAGS} #{LINUX_LIBS} -lshoes #{Config::CONFIG['LDFLAGS']} -mwindows"
       rewrite "platform/nix/shoes.launch", name, %r!/shoes!, "/#{NAME}"
       sh %{echo 'cd "$OLDPWD"'}
       sh %{echo 'LD_LIBRARY_PATH=$APPPATH $APPPATH/#{File.basename(bin)} "$@"' >> #{name}}
