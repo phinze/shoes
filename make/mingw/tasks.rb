@@ -14,10 +14,15 @@ class MakeMinGW
       super
     end
 
+    def login_sh(*args)
+      cmd = args.join(' ')
+      super "bash.exe --login -i -c \"#{cmd}\""
+    end
+
     def copy_ext xdir, libdir
       Dir.chdir(xdir) do
         puts "#copy_ext, current working dir [#{Dir.pwd}]"
-        sh 'ruby extconf.rb; make'
+        login_sh 'ruby extconf.rb; make'
       end
       copy_files "#{xdir}/*.so", libdir
     end
