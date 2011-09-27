@@ -16,6 +16,14 @@ end
 
 ADD_DLL = ["shoes/appwin32.o"]
 
+# should be referenced in make/mingw/tasks.rb #copy_deps_to_dist to copy the files listed
+# in 'dlls'; why those names are in a file and not listed here I cannot tell you; most of this
+# logic makes little sense in how it was structured.
+SANDBOX_DLL_PATHS = [
+  "../glib/bin", "../cairo/bin", "../pango/bin", "../libjpeg/mingw/bin", "../libungif/bin",
+  "../portaudio/bin", "../zlib/bin", "../sqlite3", "../ruby19_mingw/bin"
+  ]
+
 # Linux build environment
 #CAIRO_CFLAGS = '-I/mingw/include/glib-2.0 -I/mingw/lib/glib-2.0/include -I/mingw/include/cairo'
 CAIRO_CFLAGS = '-I../glib/include/glib-2.0 -I../glib/lib/glib-2.0/include -I../cairo/include/cairo'

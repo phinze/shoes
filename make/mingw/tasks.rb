@@ -30,7 +30,13 @@ class MakeMinGW
     def copy_deps_to_dist
       dlls = [RUBY_SO]
       dlls += IO.readlines("make/mingw/dlls").map{|dll| dll.chomp}
-      dlls.each{|dll| cp "#{EXT_RUBY}/bin/#{dll}.dll", "dist/"}
+      dlls.each do |dll|
+        SANDBOX_DLL_PATHS.each do |dll_path|
+          if File.exists?(File.join(dll_path, "#{dll}.dll"))
+            cp(File.join(dll_path, "#{dll}.dll"), "dist/")
+        end
+      end
+      #dlls.each{|dll| cp "#{EXT_RUBY}/bin/#{dll}.dll", "dist/"}
       cp "dist/zlib1.dll", "dist/zlib.dll"
       Dir.glob("../deps_cairo*/*"){|file| cp file, "dist/"}
       sh "strip -x dist/*.dll" unless ENV['DEBUG']
