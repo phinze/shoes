@@ -16,7 +16,7 @@ class MakeMinGW
 
     def login_sh(*args)
       cmd = args.join(' ')
-      super "bash.exe --login -i -c \"#{cmd}\""
+      sh "bash.exe --login -i -c \"#{cmd}\""
     end
 
     def copy_ext xdir, libdir
