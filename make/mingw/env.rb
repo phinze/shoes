@@ -1,7 +1,7 @@
 require File.expand_path('make/make')
 extend Make
 
-EXT_RUBY = "../mingw"
+EXT_RUBY = "../ruby19_mingw"
 
 # use the platform Ruby claims
 require 'rbconfig'
