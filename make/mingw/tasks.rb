@@ -34,6 +34,8 @@ class MakeMinGW
         SANDBOX_DLL_PATHS.each do |dll_path|
           if File.exists?(File.join(dll_path, "#{dll}.dll"))
             cp(File.join(dll_path, "#{dll}.dll"), "dist/")
+            break
+          end
         end
       end
       #dlls.each{|dll| cp "#{EXT_RUBY}/bin/#{dll}.dll", "dist/"}
