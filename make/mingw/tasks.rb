@@ -10,7 +10,8 @@ class MakeMinGW
     # out of the windows command shell if we are compiling from there.
     def sh(*args)
       cmd = args.join(' ')
-      super "bash.exe --login -i -c \"#{cmd}\""
+      #super "bash.exe --login -i -c \"#{cmd}\""
+      super
     end
 
     def copy_ext xdir, libdir
