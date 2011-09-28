@@ -6,5 +6,5 @@ if RUBY_PLATFORM =~ /mingw/
   $CFLAGS << " -I../../../../../zlib/include "
   $CFLAGS << "-DSHOES_MINGW32 "
 end
-have_library("z")
+find_library("z", nil, "../../../../../zlib/lib")
 create_makefile("binject")

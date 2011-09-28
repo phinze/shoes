@@ -9,5 +9,5 @@ $CFLAGS << " -I../../c "
   FileUtils.cp(fn, ".")
 end
 
-have_library("portaudio")
+find_library("portaudio", nil, "../../../../../portaudio/lib")
 create_makefile("bloops")
