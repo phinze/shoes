@@ -8,13 +8,13 @@ require 'rbconfig'
 
 CC = ENV['CC'] ? ENV['CC'] : "gcc"
 file_list = ["shoes/*.c"] + %w{shoes/native/windows.c shoes/http/winhttp.c shoes/http/windownload.c}
-  
+file_list = []
 SRC = FileList[*file_list]
 OBJ = SRC.map do |x|
   x.gsub(/\.\w+$/, '.o')
 end
 
-ADD_DLL = ["shoes/appwin32.o"]
+ADD_DLL = [] # ["shoes/appwin32.o"]
 
 # should be referenced in make/mingw/tasks.rb #copy_deps_to_dist to copy the files listed
 # in 'dlls'; why those names are in a file and not listed here I cannot tell you; most of this
@@ -41,11 +41,8 @@ LINUX_LIB_NAMES = %W[#{RUBY_SO} cairo pangocairo-1.0 ungif]
 FLAGS.each do |flag|
   LINUX_CFLAGS << " -D#{flag}" if ENV[flag]
 end
-if ENV['DEBUG']
-  LINUX_CFLAGS << " -g -O0 "
-else
-  LINUX_CFLAGS << " -O "
-end
+
+LINUX_CFLAGS << " -g -O0 " # always debug
 LINUX_CFLAGS << " -DRUBY_1_9"
 
 DLEXT = 'dll'
@@ -53,9 +50,11 @@ DLEXT = 'dll'
 #LINUX_CFLAGS << ' -I/mingw/include/ruby-1.9.1/ruby'
 #LINUX_CFLAGS << ' -I../ruby19_mingw/include/ruby-1.9.1/ruby'
 LINUX_CFLAGS << " -DXMD_H -DHAVE_BOOLEAN -DSHOES_WIN32 -D_WIN32_IE=0x0500 -D_WIN32_WINNT=0x0500 -DWINVER=0x0500 -DCOBJMACROS"
+LINUX_CFLAGS << " -I../winhttp/include -I../libungif/include -I ../portaudio/include"
 LINUX_LDFLAGS = " -DBUILD_DLL -L../libjpeg/mingw/lib -L../libungif/lib -L../winhttp/lib "
 LINUX_LDFLAGS << " -lungif -ljpeg -lglib-2.0 -lgobject-2.0 -lgio-2.0 -lgmodule-2.0 -lgthread-2.0 -fPIC -shared"
 LINUX_LDFLAGS << ' -lshell32 -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lole32 -loleaut32 -ladvapi32 -loleacc -lwinhttp'
+LINUX_LDFLAGS << ' -g ' # always debug
 
 cp APP['icons']['win32'], "shoes/appwin32.ico"
   

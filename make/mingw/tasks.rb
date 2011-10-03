@@ -57,18 +57,18 @@ class MakeMinGW
     def make_app(name)
       bin = name
       rm_f bin
-      sh "#{CC} -Ldist -o #{bin} bin/main.o shoes/appwin32.o #{LINUX_LDFLAGS} #{LINUX_LIBS} -lshoes #{Config::CONFIG['LDFLAGS']} -mwindows"
-      rewrite "platform/nix/shoes.launch", name, %r!/shoes!, "/#{NAME}"
-      sh %{echo 'cd "$OLDPWD"'}
-      sh %{echo 'LD_LIBRARY_PATH=$APPPATH $APPPATH/#{File.basename(bin)} "$@"' >> #{name}}
-      chmod 0755, name
+      sh "#{CC} -Ldist -o #{bin} bin/main.o -g -O0 -mwindows"
+      # rewrite "platform/nix/shoes.launch", name, %r!/shoes!, "/#{NAME}"
+      # sh %{echo 'cd "$OLDPWD"'}
+      # sh %{echo 'LD_LIBRARY_PATH=$APPPATH $APPPATH/#{File.basename(bin)} "$@"' >> #{name}}
+      # chmod 0755, name
       cp "platform/msw/shoes.exe.manifest", "dist/#{NAME}.exe.manifest"
     end
 
     def make_so(name)
       ldflags = LINUX_LDFLAGS.sub! /INSTALL_NAME/, "-install_name @executable_path/lib#{SONAME}.#{DLEXT}"
       puts "#make_so, current working directory [#{Dir.pwd}]"
-      sh "#{CC} -o #{name} #{OBJ.join(' ')} #{LINUX_LDFLAGS} #{LINUX_LIBS}"
+      # sh "#{CC} -o #{name} #{OBJ.join(' ')} #{LINUX_LDFLAGS} #{LINUX_LIBS}"
     end
 
     def make_installer
