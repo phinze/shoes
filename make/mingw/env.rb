@@ -56,6 +56,9 @@ LINUX_LDFLAGS << " -lungif -ljpeg -lglib-2.0 -lgobject-2.0 -lgio-2.0 -lgmodule-2
 LINUX_LDFLAGS << ' -lshell32 -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lole32 -loleaut32 -ladvapi32 -loleacc -lwinhttp'
 LINUX_LDFLAGS << ' -g ' # always debug
 
+# redefine CFLAGS to known working set
+LINUX_CFLAGS = "-I. -I../ruby19_mingw/include/ruby-1.9.1 -I../ruby19_mingw/include/ruby-1.9.1/i386-mingw32/ -I ../cairo/include/cairo/ -I ../pango/include/pango-1.0/ -I../glib/include/glib-2.0/ -I ../glib/lib/glib-2.0/include/ -DSHOES_WIN32 -DRUBY_1_9 -mwindows"
+
 cp APP['icons']['win32'], "shoes/appwin32.ico"
   
 LINUX_LIBS = LINUX_LIB_NAMES.map { |x| "-l#{x}" }.join(' ')

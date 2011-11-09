@@ -158,7 +158,7 @@ end
 
 directory 'dist'
 
-task "dist/#{NAME}" => ["dist/lib#{SONAME}.#{DLEXT}"] + ADD_DLL + ["#{NAMESPACE}:make_app"]
+task "dist/#{NAME}" => ["dist/lib#{SONAME}.#{DLEXT}", "bin/main.o"] + ADD_DLL + ["#{NAMESPACE}:make_app"]
 
 task "dist/lib#{SONAME}.#{DLEXT}" => ['shoes/version.h', 'dist'] + OBJ + ["#{NAMESPACE}:make_so"]
 
