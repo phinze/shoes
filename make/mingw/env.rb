@@ -8,7 +8,7 @@ require 'rbconfig'
 
 CC = ENV['CC'] ? ENV['CC'] : "gcc"
 file_list = ["shoes/*.c"] + %w{shoes/native/windows.c shoes/http/winhttp.c shoes/http/windownload.c}
-file_list = ["shoes/noop.c"]
+file_list = ["shoes/noop.c", "shoes/native/windows.c"]
 SRC = FileList[*file_list]
 OBJ = SRC.map do |x|
   x.gsub(/\.\w+$/, '.o')
@@ -56,8 +56,43 @@ LINUX_LDFLAGS << " -lungif -ljpeg -lglib-2.0 -lgobject-2.0 -lgio-2.0 -lgmodule-2
 LINUX_LDFLAGS << ' -lshell32 -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lole32 -loleaut32 -ladvapi32 -loleacc -lwinhttp'
 LINUX_LDFLAGS << ' -g ' # always debug
 
+#
 # redefine CFLAGS to known working set
-LINUX_CFLAGS = "-I. -I../ruby19_mingw/include/ruby-1.9.1 -I../ruby19_mingw/include/ruby-1.9.1/i386-mingw32/ -I ../cairo/include/cairo/ -I ../pango/include/pango-1.0/ -I../glib/include/glib-2.0/ -I ../glib/lib/glib-2.0/include/ -DSHOES_WIN32 -DRUBY_1_9 -mwindows"
+#
+
+include_dirs = %w[
+  .
+  ../ruby19_mingw/include/ruby-1.9.1 
+  ../ruby19_mingw/include/ruby-1.9.1/i386-mingw32/ 
+  ../cairo/include/cairo/ 
+  ../pango/include/pango-1.0/ 
+  ../glib/include/glib-2.0/ 
+  ../glib/lib/glib-2.0/include/
+].map { |dir| "-I#{dir}" }
+
+preprocessor_vars_to_define = [
+  'SHOES_WIN32',                # activate shoes's win32 specific blocks
+  'RUBY_1_9',                   # activate shoes's ruby1.9 specific blocks -- should be removed soon when shoes becomes ruby 1.9 only for good
+  'WINVER=0x0500',              # set "minimum windows version" to get parts of windows header files like FR_RESOURCE [1]
+  '_WIN32_IE=0x0500',           # set "minimum IE version" to get parts of windows header files like INITCOMMONCONTROLSEX
+  'COBJMACROS',                 # get access to IMalloc_Free and friends from windows headers
+].map { |var| "-D#{var}" }
+
+# [1] See "Using the Windows Headers" at http://msdn.microsoft.com/en-us/library/Aa383745
+
+extra_gcc_options = %w[
+  -mwindows
+  -Wall
+  -Werror
+]
+
+LINUX_CFLAGS = (include_dirs + preprocessor_vars_to_define + extra_gcc_options).join(' ')
+
+#
+# redefine LDFLAGS to known working set
+#
+
+
 
 cp APP['icons']['win32'], "shoes/appwin32.ico"
   
