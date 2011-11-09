@@ -8,7 +8,7 @@ require 'rbconfig'
 
 CC = ENV['CC'] ? ENV['CC'] : "gcc"
 file_list = ["shoes/*.c"] + %w{shoes/native/windows.c shoes/http/winhttp.c shoes/http/windownload.c}
-file_list = []
+file_list = ["shoes/noop.c"]
 SRC = FileList[*file_list]
 OBJ = SRC.map do |x|
   x.gsub(/\.\w+$/, '.o')

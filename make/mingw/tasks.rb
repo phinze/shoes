@@ -55,9 +55,12 @@ class MakeMinGW
     end
 
     def make_app(name)
+      puts 'CALLING make_app'
       bin = name
       rm_f bin
-      sh "#{CC} -Ldist -o #{bin} bin/main.o -g -O0 -mwindows"
+      # sh "#{CC} -Ldist -o #{bin} bin/main.o shoes/appwin32.o #{LINUX_LDFLAGS} #{LINUX_LIBS} -lshoes #{Config::CONFIG['LDFLAGS']} -mwindows"
+      sh "gcc -I. -I../ruby19_mingw/include/ruby-1.9.1 -I../ruby19_mingw/include/ruby-1.9.1/i386-mingw32/ -I ../cairo/include/cairo/ -I ../pango/include/pango-1.0/ -I../glib/include/glib-2.0/ -I ../glib/lib/glib-2.0/include/ -o #{bin} bin/main.c -DSHOES_WIN32 -DRUBY_1_9 -mwindows"
+      # sh "#{CC} -Ldist -o #{bin} bin/main.o -g -O0 -mwindows"
       # rewrite "platform/nix/shoes.launch", name, %r!/shoes!, "/#{NAME}"
       # sh %{echo 'cd "$OLDPWD"'}
       # sh %{echo 'LD_LIBRARY_PATH=$APPPATH $APPPATH/#{File.basename(bin)} "$@"' >> #{name}}
@@ -66,9 +69,11 @@ class MakeMinGW
     end
 
     def make_so(name)
+      puts 'CALLING `make_so`'
       ldflags = LINUX_LDFLAGS.sub! /INSTALL_NAME/, "-install_name @executable_path/lib#{SONAME}.#{DLEXT}"
       puts "#make_so, current working directory [#{Dir.pwd}]"
       # sh "#{CC} -o #{name} #{OBJ.join(' ')} #{LINUX_LDFLAGS} #{LINUX_LIBS}"
+      sh "#{CC} -o #{name} #{OBJ.join(' ')} -DSHOES_WIN32 -DBUILD_DLL -shared"
     end
 
     def make_installer

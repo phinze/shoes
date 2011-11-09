@@ -115,7 +115,7 @@ end
 # skel
 
 def skel_replace(line)
-  line.gsub! /\s+%DEFAULTS%/ do
+  line.gsub /\s+%DEFAULTS%/ do
     if APPARGS
       args = APPARGS.split(/\s+/)
       %{
@@ -124,8 +124,7 @@ def skel_replace(line)
         argc = #{args.length + 1};
       }
     end
-  end
-  line
+  end.gsub /%BUILDTIME%/, Time.now.to_s
 end
 
 # preprocess .skel
@@ -159,7 +158,7 @@ end
 
 directory 'dist'
 
-task "dist/#{NAME}" => ["dist/lib#{SONAME}.#{DLEXT}", "bin/main.o"] + ADD_DLL + ["#{NAMESPACE}:make_app"]
+task "dist/#{NAME}" => ["dist/lib#{SONAME}.#{DLEXT}"] + ADD_DLL + ["#{NAMESPACE}:make_app"]
 
 task "dist/lib#{SONAME}.#{DLEXT}" => ['shoes/version.h', 'dist'] + OBJ + ["#{NAMESPACE}:make_so"]
 

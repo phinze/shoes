@@ -25,7 +25,9 @@ module Make
   end
 
   def cc(t)
-    sh "#{CC} -I. -c -o#{t.name} #{LINUX_CFLAGS} #{t.source}"
+    puts "-- about to cc #{t.inspect} --"
+    # sh "#{CC} -I. -c -o#{t.name} #{LINUX_CFLAGS} #{t.source}"
+    sh "#{CC} -I. -c -o#{t.name} #{t.source}"
   end
 
   # Subs in special variables
